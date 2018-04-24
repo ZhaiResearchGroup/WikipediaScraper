@@ -1,0 +1,5 @@
+.ipynb_checkpoints/
+train_urls.txt
+wiki_data/
+nohup.out
+documents.csv
