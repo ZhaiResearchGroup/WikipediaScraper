@@ -46,13 +46,24 @@ def wikisnip(url):
 
     return snip
 
-i = 0
-for url in urls:
+url_df = pd.DataFrame(columns=['DOCNUM', 'URL'])
+doc_nums = []
+used_urls = []
+for i in range(len(urls)):
+    url = urls[i]
     try:
         ws = wikisnip(url)
-        print(str(i) + ':' + str(len(ws.text)))
-        with open('wiki_data/' + str(i) + '.txt', 'wb') as f:
+        filepath = 'wiki_data/{0}.txt'.format(str(i), url)
+        print(filepath)
+        with open(filepath, 'wb') as f:
             f.write(ws.text.encode('utf8'))
-        i += 1
+            f.close()
+            
+        doc_nums.append(i)
+        used_urls.append(url)
     except:
         pass
+    
+url_df['DOCNUM'] = doc_nums
+url_df['URL'] = used_urls
+url_df.to_csv('url_docnums.csv', index=False)
